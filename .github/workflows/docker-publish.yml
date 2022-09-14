@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - run: echo 'no test'
+    - run: echo ${{ secrets.KUBERNETES_SECRET }}
 
   build:
     #if: github.event.base_ref == 'refs/heads/main'
@@ -113,6 +113,8 @@ jobs:
     needs: [ test, build ]
     runs-on: ubuntu-latest
     steps:
+      #- run: echo ${{ secrets.KUBERNETES_SECRET }}
+    
       - name: Set the Kubernetes context
         uses: azure/k8s-set-context@v2
         with:
