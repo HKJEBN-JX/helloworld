@@ -11,6 +11,7 @@ COPY --chown=node:node . /usr/src/app
 
 # RUN npm install
 # If you are building your code for production
+RUN /bin/su nonroot
 RUN npm ci --only=production
 
 # Bundle app source
