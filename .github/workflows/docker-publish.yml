@@ -113,7 +113,7 @@ jobs:
     needs: [ test, build ]
     runs-on: ubuntu-latest
     steps:
-      #- run: echo ${{ secrets.KUBERNETES_SECRET }}
+      # - run: echo ${{ secrets.KUBERNETES_SECRET }}
     
       - name: Set the Kubernetes context
         uses: azure/k8s-set-context@v2
@@ -131,7 +131,7 @@ jobs:
           namespace: default
           manifests: |
             kubernetes/deployment.yaml
-            #kubernetes/ingress.yaml
-            #kubernetes/service.yaml
+            # kubernetes/ingress.yaml
+            # kubernetes/service.yaml
           images: |
             ghcr.io/hkjebn-jx/helloworld:${{ github.sha }}
