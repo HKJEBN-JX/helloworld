@@ -128,10 +128,9 @@ jobs:
       # kubernetes/ingress.yaml
       # kubernetes/service.yaml
       - name: Deploy to the Kubernetes cluster
-        uses: azure/k8s-deploy@v1
+        uses: azure/k8s-deploy@v4.4
         with:
           namespace: default
           manifests: |
             kubernetes/deployment.yaml            
-          images: |
-            ghcr.io/hkjebn-jx/helloworld:${{ github.sha }}
+          
