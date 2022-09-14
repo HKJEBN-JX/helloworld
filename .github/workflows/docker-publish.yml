@@ -125,13 +125,13 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
 
+      # kubernetes/ingress.yaml
+      # kubernetes/service.yaml
       - name: Deploy to the Kubernetes cluster
         uses: azure/k8s-deploy@v1
         with:
           namespace: default
           manifests: |
-            kubernetes/deployment.yaml
-            # kubernetes/ingress.yaml
-            # kubernetes/service.yaml
+            kubernetes/deployment.yaml            
           images: |
             ghcr.io/hkjebn-jx/helloworld:${{ github.sha }}
