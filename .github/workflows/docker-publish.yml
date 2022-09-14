@@ -134,4 +134,4 @@ jobs:
           manifests: |
             kubernetes/deployment.yaml            
           images: |
-            ghcr.io/hkjebn-jx/helloworld:${{ github.sha }}
+            ghcr.io/hkjebn-jx/helloworld:sha-${{ github.sha }}
