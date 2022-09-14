@@ -18,6 +18,9 @@ env:
 
 
 jobs:  
+  test:
+    name: Test
+    runs-on: ubuntu-latest
 
   build:
     #if: github.event.base_ref == 'refs/heads/main'
@@ -101,3 +104,28 @@ jobs:
       # against the sigstore community Fulcio instance.
       run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
 
+  deploy:
+    name: Deploy
+    needs: [ test, build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: 9a1c-115-160-163-195.ap.ngrok.io
+          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Deploy to the Kubernetes cluster
+        uses: azure/k8s-deploy@v1
+        with:
+          namespace: default
+          manifests: |
+            kubernetes/deployment.yaml
+            #kubernetes/ingress.yaml
+            #kubernetes/service.yaml
+          images: |
+            ghcr.io/hkjebn-jx/helloworld:${{ github.sha }}
