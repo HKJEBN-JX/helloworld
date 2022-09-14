@@ -2,9 +2,10 @@ name: Build Docker Image
 
 on:
   push:
-    branches: [ "main" ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    #branches:
+    #  - main
+    tags:
+      - v*
   pull_request:
     branches: [ "main" ]
     
@@ -19,6 +20,9 @@ jobs:
 
   build:
     name: Build
+    
+    if: github.event.base_ref == 'refs/heads/main'
+    
     runs-on: ubuntu-latest
     
     permissions:
