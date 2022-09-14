@@ -21,6 +21,9 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    
+    steps:
+    - run: echo 'no test'
 
   build:
     #if: github.event.base_ref == 'refs/heads/main'
