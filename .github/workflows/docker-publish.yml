@@ -119,7 +119,7 @@ jobs:
         uses: azure/k8s-set-context@v2
         with:
           method: service-account
-          k8s-url: http://9a1c-115-160-163-195.ap.ngrok.io
+          k8s-url: https://9a1c-115-160-163-195.ap.ngrok.io
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
       
       - name: Checkout source code
