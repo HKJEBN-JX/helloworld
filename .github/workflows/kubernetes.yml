@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: kubernetes
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy:
+    name: Deploy    
+    runs-on: ubuntu-latest
+    steps:
+      # - run: echo ${{ secrets.KUBERNETES_SECRET }}
+    
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: https://9a1c-115-160-163-195.ap.ngrok.io
+          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        
+      - uses: Azure/k8s-deploy@v4
+        with:                      
+           action: deploy
+           strategy: basic
+
+           private-cluster: true
+           manifests: |
+              kubernetes/deployment.yaml              
+           
